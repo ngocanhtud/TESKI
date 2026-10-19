@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TESKI – Technologien zum Schutz kritischer Infrastruktur | HTW Dresden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,500&display=swap" rel="stylesheet">
+<style>
+  /* Alles ist unter .teski gekapselt, damit es sich in die HTW-Seite einbetten lässt */
+  .teski{
+    --orange:#EF7D00; --orange-dark:#C96500; --orange-soft:#FFF3E6;
+    --ink:#1D1D1B; --ink-2:#4A4A48; --line:#E3E1DC; --bg-alt:#F6F5F2;
+    --water:#1B7FB8; --build:#7A6A58; --energy:#C99800; --digital:#5B4FA8;
+    font-family:"Source Sans 3",system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.6;
+    max-width:1040px;margin:0 auto;padding:0 20px 40px;background:#fff
+  }
+  body{margin:0;background:#fff}
+  .teski *{box-sizing:border-box}
+  .teski h1,.teski h2,.teski h3{margin:0;line-height:1.2}
+  .teski h2{font-size:26px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+  .teski h2::before{content:"";width:24px;height:3px;background:var(--orange);flex:none}
+  .teski section{margin-top:48px}
+  .teski p{margin:0 0 14px}
+
+  /* Kopf */
+  .t-hero{margin-top:24px;background:var(--bg-alt);color:var(--ink);padding:36px 36px 32px;border-left:6px solid var(--orange)}
+  .t-hero .tag{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange-dark)}
+  .t-hero h1{font-size:clamp(44px,7vw,68px);font-weight:700;letter-spacing:-.02em;margin-top:6px}
+  .t-hero .sub{font-size:clamp(19px,2.4vw,24px);color:var(--ink-2);margin-top:4px}
+  .t-facts{display:flex;flex-wrap:wrap;gap:12px 36px;margin-top:24px;padding-top:20px;border-top:1px solid var(--line);font-size:15px}
+  .t-facts span{color:var(--orange-dark);display:block;font-size:12px;text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+  .t-facts b{font-weight:600}
+
+  /* Intro */
+  .t-intro{display:grid;grid-template-columns:1.5fr 1fr;gap:36px}
+  .t-intro .side{background:var(--bg-alt);padding:22px 24px;align-self:start}
+  .t-intro .side h3{font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--orange-dark);margin:0 0 6px}
+  .t-intro .side p{font-size:15px;color:var(--ink-2);margin-bottom:16px}
+  .t-intro .side p:last-child{margin:0}
+  .t-steps{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);margin-top:8px}
+  .t-steps div{padding:16px 18px;border-right:1px solid var(--line);font-size:15px;color:var(--ink-2)}
+  .t-steps div:last-child{border-right:0}
+  .t-steps b{display:block;color:var(--ink);font-size:16px}
+  .t-steps i{font-style:normal;font-family:"Source Serif 4",serif;color:var(--orange);font-size:22px;margin-right:6px}
+  @media (max-width:800px){.t-intro{grid-template-columns:1fr}.t-steps{grid-template-columns:1fr}.t-steps div{border-right:0;border-bottom:1px solid var(--line)}.t-steps div:last-child{border-bottom:0}}
+
+  /* Arbeitspakete als Akkordeon */
+  .t-hint{font-size:14px;color:var(--ink-2);margin:-6px 0 14px}
+  .t-ap{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .t-ap details{border:1px solid var(--line);border-left:4px solid var(--c);background:#fff}
+  .t-ap summary{list-style:none;cursor:pointer;padding:14px 44px 14px 16px;position:relative;font-weight:600;font-size:16px;line-height:1.35}
+  .t-ap summary::-webkit-details-marker{display:none}
+  .t-ap summary::after{content:"+";position:absolute;right:16px;top:12px;font-size:22px;font-weight:400;color:var(--c);transition:transform .2s}
+  .t-ap details[open] summary::after{transform:rotate(45deg)}
+  .t-ap summary .code{display:inline-block;min-width:42px;color:var(--c);font-weight:700}
+  .t-ap details p{margin:0;padding:0 16px 16px 58px;font-size:15px;color:var(--ink-2)}
+  .t-ap .water{--c:var(--water)} .t-ap .build{--c:var(--build)} .t-ap .energy{--c:var(--energy)} .t-ap .digital{--c:var(--digital)} .t-ap .cross{--c:var(--orange)}
+  .t-legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;font-weight:600;margin-top:12px;color:var(--ink-2)}
+  .t-legend i{display:inline-block;width:10px;height:10px;margin-right:6px;border-radius:2px}
+  @media (max-width:760px){.t-ap{grid-template-columns:1fr}}
+
+  /* Bilder */
+  .t-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}
+  .t-ph{aspect-ratio:4/3;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:10px;font-size:13px;font-weight:600;color:var(--ink-2);
+    background:repeating-linear-gradient(45deg,#ECEAE5 0 12px,#F4F2EE 12px 24px);border:1px dashed #C9C5BC}
+  .t-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .t-ph span{position:relative;background:rgba(255,255,255,.92);padding:4px 8px}
+  @media (max-width:600px){.t-photos{grid-template-columns:1fr 1fr}.t-ph:first-child{grid-column:span 2}}
+
+  /* Team */
+  .t-team{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+  .t-team h3{font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--orange-dark);margin-bottom:8px}
+  .t-team ul{list-style:none;margin:0;padding:0}
+  .t-team li{padding:7px 0;border-bottom:1px solid var(--line);font-size:15px;display:flex;justify-content:space-between;gap:12px}
+  .t-team li b{font-weight:600}
+  .t-team li small{color:var(--ink-2);font-size:14px;text-align:right}
+  .t-team .lead-nfg{background:var(--orange-soft);border-left:4px solid var(--orange);padding:12px 14px;margin-bottom:12px;font-size:15px}
+  .t-team .lead-nfg b{display:block;font-size:16px}
+  @media (max-width:760px){.t-team{grid-template-columns:1fr}}
+
+    /* Teamfoto */
+  .t-teamphoto{margin:24px 0 0}
+  .t-teamphoto .frame{width:100%;aspect-ratio:21/9;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;
+    background:repeating-linear-gradient(45deg,#ECEAE5 0 12px,#F4F2EE 12px 24px);border:1px dashed #C9C5BC;font-size:14px;font-weight:600;color:var(--ink-2)}
+  .t-teamphoto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%}
+  .t-teamphoto figcaption{font-size:14px;color:var(--ink-2);margin-top:8px}
+  @media (max-width:600px){.t-teamphoto .frame{aspect-ratio:4/3}}
+
+  /* Förderung */
+  .t-fund{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .t-logos{display:flex;gap:14px;flex-wrap:wrap}
+  .t-logo{width:180px;height:62px;border:1px dashed #C9C5BC;background:#FAFAF8;display:grid;place-items:center;text-align:center;font-size:12px;font-weight:600;color:var(--ink-2);padding:6px}
+  .t-fund p{flex:1;min-width:260px;margin:0;font-size:14px;color:var(--ink-2)}
+  .t-contact{margin-top:20px;font-size:15px}
+  .t-contact a{color:var(--orange-dark)}
+</style>
+</head>
+<body>
+<div class="teski">
+
+  <!-- KOPF -->
+  <div class="t-hero">
+    <div class="tag">Nachwuchsforschergruppe </div>
+    <h1>TESKI</h1>
+    <div class="sub">Technologien zum Schutz kritischer Infrastruktur</div>
+    <div class="t-facts">
+      <div><span>Laufzeit</span><b>01.11.2026 – 31.10.2028</b></div>
+      <div><span>Gesamtausgaben</span><b>1.597.848,89 € </b></div>
+      <!-- <div><span>Förderung</span><b>ESF Plus &amp; Freistaat Sachsen</b></div> -->
+      <div><span>Förderung</span><b>xxx</b></div>
+    </div>
+  </div>
+
+  <!-- PROJEKT -->
+  <section>
+    <h2>Das Projekt</h2>
+    <div class="t-intro">
+      <div>
+        <p>Unsere Gesellschaft ist von Infrastrukturen geprägt und auf deren Funktions- und Leistungsfähigkeit angewiesen. Auf Bundesebene werden als kritische Infrastruktur (KRITIS) Einrichtungen mit großer Bedeutung für das staatliche Gemeinwesen bezeichnet, bei deren Ausfall oder Beeinträchtigung nachhaltig wirkende Versorgungsengpässe, erhebliche Störungen der öffentlichen Sicherheit oder andere dramatische Folgen eintreten würden. Zu diesen zählen die Wasser- und Energieversorgung, Abwasserentsorgung, der Transport/Verkehr, die Gesundheit, die Informationstechnik und Telekommunikation sowie weitere Sektoren. Naturgefahren wie Hochwasser, Starkregen, Hagel, Sturm, Sommerhitze und Dürre treten häufiger auf und führen so zu Schäden an Infrastrukturbauwerken. Auch anthropogene Extremereignisse, wie Vandalismus, Sabotage, Unfälle und Cyberangriffe stellen eine Gefahr für solche Strukturen dar. Im Fokus stehen Bauwerke und bauliche Anlagen, deren Standsicherheit und Funktionstüchtigkeit als Bestandteile der kritischen Infrastruktur herausragende Bedeutung haben.</p>
+        <p>Die Nachwuchsforschergruppe TESKI verbindet die Technologieentwicklung im Wasser-, Energie- und Bausektor mit dem Schutz bestehender und künftiger kritischer Infrastruktur. Ziel ist die Stärkung der Versorgungssicherheit.</p>
+      </div>
+      <aside class="side">
+        <h3>STEP-Sektoren</h3>
+        <p>Digitale und technologieintensive Innovationen · Umweltschonende und ressourceneffiziente Technologien</p>
+        <h3>Resilience-by-Design</h3>
+        <p>Sicherheits- und Robustheitsanforderungen werden bereits in frühen Phasen der Technologie- und Infrastrukturentwicklung systematisch berücksichtigt.</p>
+        <h3>Kompetenzerwerb</h3>
+        <p>Technologieentwicklung, Risikomanagement, Digitalisierung und Datenmanagement für kritische Infrastrukturen.</p>
+      </aside>
+    </div>
+    <div class="t-steps">
+      <div><b><i>01</i>Messen</b>Experimentelle und sensorbasierte Datenerhebung</div>
+      <div><b><i>02</i>Analysieren</b>KI-gestützte Analyse von Belastungen und Störereignissen</div>
+      <div><b><i>03</i>Stärken</b>Technologiegestützte, sektorübergreifend übertragbare Resilienzmaßnahmen</div>
+    </div>
+  </section>
+
+  <!-- ARBEITSPAKETE -->
+  <section>
+    <h2>Arbeitspakete</h2>
+    <!-- <p class="t-hint">Zum Aufklappen auf ein Arbeitspaket klicken.</p> -->
+    <div class="t-ap">
+      <details class="cross"><summary><span class="code">AP1</span>Ausbildung, Ergebnispräsentation und Öffentlichkeitsarbeit</summary><p>Qualifizierung der Nachwuchsforschenden im Bereich Risikomanagement-Technologien und Vermittlung der Ergebnisse an Fachwelt und Öffentlichkeit.</p></details>
+      <details class="water"><summary><span class="code">AP2</span>Flusswasseraufbereitung mittels Ozon und weiteren Oxidationsprozessen</summary><p>Ziel ist die Sicherung der Trink- und Industriewasserversorgung in Krisensituationen.</p></details>
+      <details class="water"><summary><span class="code">AP3</span>Unterirdische Wasserspeicherung für Notfälle</summary><p>Entwickelt werden unterirdische Speicher, die Not- und Löschwasser bereitstellen.</p></details>
+      <details class="build"><summary><span class="code">AP4</span>Resilienz von Bauwerken der kritischen Infrastruktur</summary><p>Mit versuchsgestützten Prüfmethoden und datenbasiertem Monitoring werden hochwasserexponierte Bauwerks- und Ausrüstungselemente untersucht, um sie widerstandsfähiger gegen Starkregen und Hochwasser zu machen.</p></details>
+      <details class="build"><summary><span class="code">AP5</span>Resilienz von Gleisanlagen gegenüber Extremereignissen und Vandalismus</summary><p>Das Paket trägt zur Sicherung des Bahnverkehrs und damit der nachhaltigen Mobilität bei.</p></details>
+      <details class="build"><summary><span class="code">AP6</span>Technologieentwicklung im Erd- und Spezialtiefbau</summary><p>Planungswerkzeuge für ressourceneffiziente und widerstandsfähige geotechnische Infrastrukturteile, digitale Erfassung von Untergrundverformungen an Stütz- und Schutzmauern sowie Injektionsmethoden zur Erhöhung der Tragfähigkeit.</p></details>
+      <details class="energy"><summary><span class="code">AP7</span>Resilienz der Stromversorgungsinfrastruktur</summary><p>Bestehende resilienzsteigernde Maßnahmen im Nieder-, Mittel- und Hochspannungsnetz werden verglichen und auf ihre Übertragbarkeit zwischen den Spannungsebenen geprüft.</p></details>
+      <details class="digital"><summary><span class="code">AP8</span>Cybersicherheit für digitalisierte KRITIS-Sensorinfrastrukturen</summary><p>Als Querschnittsarbeitspaket unterstützt AP8 die sichere Digitalisierung in den Sektoren Wasser, Energie und Verkehr.</p></details>
+      <details class="digital"><summary><span class="code">AP9</span>Datenmanagement und Visualisierung</summary><p>Die Mess- und Simulationsdaten aus AP1–7 werden strukturiert aufbereitet, über automatisierte Workflows visualisiert und so als Grundlage für spätere digitale Zwillinge nutzbar gemacht.</p></details>
+    </div>
+    <div class="t-legend">
+      <span><i style="background:var(--water)"></i>Wasser</span>
+      <span><i style="background:var(--build)"></i>Bau &amp; Verkehr</span>
+      <span><i style="background:var(--energy)"></i>Energie</span>
+      <span><i style="background:var(--digital)"></i>Digital</span>
+      <span><i style="background:var(--orange)"></i>Querschnitt</span>
+    </div>
+  </section>
+
+  <!-- BILDER: Platzhalter durch <img src="..." alt="..."> ersetzen -->
+  <section>
+    <h2>Einblicke ins Bautechnikum</h2>
+    <div class="t-photos">
+      <div class="t-ph">
+         <img src="img/1DNETZ.jpg" alt="Kanalnetzmodell">
+         <span>Foto: Regenwasserkanalnetzmodell</span></div>
+      <div class="t-ph">
+         <img src="img/infiltration.jpg" alt="Kanalnetzmodell">
+        <span>Foto: Speicherbecken</span></div>
+      <div class="t-ph">
+        <img src="img/bahndresden.jpg" alt="Kanalnetzmodell">
+        <span>Foto: Gleiskörper-Versuch</span></div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section>
+    <h2>Team</h2>
+    <div class="t-team">
+      <div>
+        <h3>Nachwuchsforschergruppe</h3>
+        <!-- <div class="lead-nfg"><b>Dr.-Ing. Thi Ngoc Anh Hoang</b>Gruppenleiterin, Senior Scientist (Post-Doc)</div> -->
+        <ul>
+          <!-- TODO: akademischen Titel ergänzen -->
+           <li><b>Dr.-Ing. Thi Ngoc Anh Hoang</b><small>Gruppenleiterin, Senior Scientist (Post-Doc)</small></li>
+          <li><b>Alexander Peter</b><small>Senior Scientist</small></li>
+          <li><b>Lena Prestin</b><small>M.Sc. Wasserwirtschaft</small></li>
+          <li><b>Seline Rühle</b><small>Dipl.-Ing. Bauingenieurwesen</small></li>
+          <li><b>Josef Mauersberger</b><small>Dipl.-Ing. Bauingenieurwesen</small></li>
+          <li><b>Birsen Bilgili-Yüksel</b><small>M.Sc. Bauingenieurwesen</small></li>
+          <li><b>Paolo Beck</b><small>B.Eng. Elektrotechnik</small></li>
+          <li><b>N. N.</b><small>M.Sc. Informatik</small></li>
+          <li><b>Erik Brendel</b><small>Dipl.-Ing. Bauingenieurwesen, Projektmanagement</small></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Projektleitung &amp; Betreuung</h3>
+        <ul>
+          <li><b>Prof. Dr.-Ing. Thomas Grischek</b><small>Bauingenieurwesen</small></li>
+          <li><b>Prof. Dr.-Ing. Holger Flederer</b><small>Bauingenieurwesen</small></li>
+          <li><b>Dr.-Ing. Sebastian Golz</b><small>Bauingenieurwesen / IBiK</small></li>
+          <li><b>Prof. Dr.-Ing. Jens Engel</b><small>Bauingenieurwesen</small></li>
+          <li><b>Prof. Dr.-Ing. Ulrike Gräfe</b><small>Bauingenieurwesen</small></li>
+          <li><b>Prof. Dr.-Ing. Jörg Meyer</b><small>Elektrotechnik</small></li>
+          <li><b>Prof. Dr. rer. nat. Lukas Iffländer</b><small>Informatik/Mathematik</small></li>
+          <li><b>Prof. Dr.-Ing. Lutz Tautenhahn</b><small>Bauingenieurwesen</small></li>
+        </ul>
+      </div>
+    </div>
+    <!-- TODO: E-Mail-Adresse eintragen -->
+    <p class="t-contact"><b>Kontakt:</b> <a href="mailto:">Dr.-Ing. Thi Ngoc Anh Hoang </a> oder <a href="mailto:"> Dipl.-Ing. Erik Brendel </a> </p>
+       
+    <figure class="t-teamphoto">
+      <div class="frame">
+        Teamfoto folgt
+        <img src="img/dresden.jpg" alt="Das TESKI-Team der HTW Dresden">
+      </div>
+      <figcaption>Das TESKI Team</figcaption>
+    </figure>
+  </section>
+
+  <!-- FÖRDERHINWEIS: offizielle Logos von der SAB-Publizitätsseite einsetzen -->
+  <div class="t-fund">
+    <!-- <div class="t-logos">
+      <div class="t-logo">Logo: Kofinanziert von der Europäischen Union</div>
+      <div class="t-logo">Logo: Freistaat Sachsen</div>
+    </div> -->
+    <p>Gefördert im Rahmen der ....</p>
+  </div>
+
+</div>
+</body>
+</html>
